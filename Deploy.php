@@ -102,9 +102,9 @@ class Deploy
     const toLoadConfig = 'Local';
 
     /**
-     * 部署时后端的nginx 转发路由标识
+     * 部署时后端的nginx 转发路由标识 normphp
      */
-    const MODULE_PREFIX = 'normphp';
+    const MODULE_PREFIX = '';
 
 
     /**

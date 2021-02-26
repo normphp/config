@@ -149,7 +149,7 @@ class Config
             /**
              * 默认 \ 路由的路径-》已经存在的注解地址
              */
-            'index'=>'index.html',
+            'index'=>'/demo/index.html',
 
             /**
              * 控制器return默认数据类型
