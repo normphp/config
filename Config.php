@@ -32,7 +32,11 @@ class Config
      */
     CONST __SALT__ ='d~ds@d980652#re1ss$%^ds43x';
     /**
-     * 坚持配置
+     * 错误日志保存方式 file|db
+     */
+    CONST ERROR_LOG_SAVE = 'file';
+    /**
+     * 一般配置
      */
     CONST UNIVERSAL =[
         'cache' => [
