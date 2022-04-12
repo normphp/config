@@ -73,7 +73,7 @@ class Config
              * 设置返回详细的数据类型
              * http://tool.oschina.net/commons/
              */
-            'HeaderType'=>[
+            'headerType'=>[
                 'pdf'=>['Content-Type'=>'application/pdf'],
             ],
             /**
@@ -105,33 +105,33 @@ class Config
             /**
              * 成功返回格式
              */
-            'SuccessReturnJsonCode'=>[
+            'successReturnJsonCode'=>[
                 'name'=>'code',
                 'value'=>200,
             ],
-            'ErrorReturnJsonCode'=>[
+            'errorReturnJsonCode'=>[
                 'name'=>'code',
                 'value'=>100,
             ],
             /**
              * 错误返回格式
              */
-            'SuccessReturnJsonMsg'=>[
+            'successReturnJsonMsg'=>[
                 'name'=>'msg',
                 'value'=>'success',
             ],
-            'ErrorReturnJsonMsg'=>[
+            'errorReturnJsonMsg'=>[
                 'name'=>'msg',
                 'value'=>'error',
             ],
             /**
              * 返回的数据总体
              */
-            'ReturnJsonData'=>'data',
+            'returnJsonData'=>'data',
             /**
              * 返回的数据数量
              */
-            'ReturnJsonCount'=>'count',
+            'returnJsonCount'=>'count',
             /**
              * 没有权限
              */
