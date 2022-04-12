@@ -26,11 +26,11 @@ class Config
      * 为了确保空间唯一的
      * 本服务的uuid标识（分布式时可保证不同服务之间的空间唯一）
      */
-    CONST __UUID_IDENTIFIER__ = 'normphp-1';
+    CONST UUID_IDENTIFIER = 'normphp-1';
     /**
      * 全局盐
      */
-    CONST __SALT__ ='d~ds@d980652#re1ss$%^ds43x';
+    CONST SALT ='d~ds@d980652#re1ss$%^ds43x';
     /**
      * 错误日志保存方式 file|db
      */
