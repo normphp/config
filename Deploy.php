@@ -54,7 +54,9 @@ class Deploy
      * 服务模式对应路由中的resourceType（控制服务方式）
      */
     const SERVICE_PATTERN = ['api','microservice'];
-
+    /**
+     * 微服务配置
+     */
     const MicroService = [
         'url' =>'',//配置中心地址（建议使用服务ip）
         'hostDomain'  =>'',//域名（配合ip使用） 服务端使用cdn时非常有用
@@ -64,7 +66,9 @@ class Deploy
         'token'=>'',//签名使用
         'urlencode' => true,
     ];
-    # 当前项目的权限根信息
+    /**
+     * 当前项目的权限根信息
+     */
     const PERMISSIONS = [
         'title' =>'系统核心',
         'id'    =>'normphp',

@@ -37,60 +37,63 @@ class Config
     CONST ERROR_LOG_SAVE = 'file';
     /**
      * 一般配置
+     *  cache    缓存
+     *      driveType 缓存类型（驱动drive）redis file
+     *      targetDir 缓存路径（file类型下） DIRECTORY_SEPARATOR 目录分割符
+     *      CacheTypeDir 缓存类型目录
+     * init 初始化
+     *      json_encode json_encode 参数
+     *      header  默认自定义响应
+     *      headerType   设置返回详细的数据类型 http://tool.oschina.net/commons/
+     *      requestParam  是否对请求参数进行过滤（删除不在注解中的参数key）
+     *      requestParamTier   请求过来的xml 数据层级 限制（防止攻击）
+     *      clientInfo  是否开启获取客户端详情true
+     *      SYSTEMSTATUS  设置返回信息内容(非开发模式下)
+     *            'controller',//路由控制器
+     *             'function_method',// 请求方法 get post
+     *            'request_method',//控制器方法
+     *            'request_url',//完整路由（去除域名的url地址）
+     *            'route',//解释路由
+     *            'sql',//历史slq
+     *            'clientInfo',//ip信息
+     *            'system',//系统状态
+     *            'memory',//内存状态
+     *     成功返回格式
+     *      successReturnJsonCode
+     *      errorReturnJsonCode
+     *     失败返回格式
+     *      successReturnJsonMsg
+     *      errorReturnJsonMsg
+     *      returnJsonData    返回的数据总体
+     *      returnJsonCount  返回的数据数量
+     *      jurisdictionCode  没有权限
+     *      notLoggedCode     没有登录
+     * 路由配置
+     * route 路由
+     *      type    路由类型  note 注解
+     *      index   默认 \ 路由的路径-》已经存在的注解地址
+     *      return  控制器return默认数据类型json html
+     *      postfix  自定义路由后缀在前后端完全分离时有用：nginx 配置中固定的后缀转发到后端
+     * returnSubjoin 自定义路由 数据格式
      */
     CONST UNIVERSAL =[
         'cache' => [
-            /**
-             * 缓存类型（驱动drive）redis file
-             */
             'driveType'=>'file',
-            /**
-             * 缓存路径（file类型下）
-             *DIRECTORY_SEPARATOR 目录分割符
-             */
             'targetDir' => '..'.DIRECTORY_SEPARATOR.'runtime'.DIRECTORY_SEPARATOR,
-            /**
-             *缓存类型目录
-             */
             'CacheTypeDir'=>'',
         ],
-        /**
-         * 初始化
-         */
         'init' =>[
-            /**
-             * json_encode 参数
-             */
             'json_encode'=>JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES,
-            /**
-             * 默认自定义响应
-             */
             'header'=>[
                 'X-Powered-By'=>'ASP.NET',
                 'Server'=>'Apache/2.4.23 (Win32) OpenSSL/1.0.2j mod_fcgid/2.3.9',
             ],
-            /**
-             * 设置返回详细的数据类型
-             * http://tool.oschina.net/commons/
-             */
             'headerType'=>[
                 'pdf'=>['Content-Type'=>'application/pdf'],
             ],
-            /**
-             * 是否对请求参数进行过滤（删除不在注解中的参数key）
-             */
             'requestParam'=>true,
-            /**
-             * 请求过来的xml 数据层级 限制（防止攻击）
-             */
             'requestParamTier'=>50,
-            /**
-             *是否开启获取客户端详情true
-             */
             'clientInfo'=>false,
-            /**
-             *设置返回信息内容(非开发模式下)
-             */
             'SYSTEMSTATUS'=>[
                 'controller',//路由控制器
                 'function_method',// 请求方法 get post
@@ -102,9 +105,6 @@ class Config
                 'system',//系统状态
                 'memory',//内存状态
             ],
-            /**
-             * 成功返回格式
-             */
             'successReturnJsonCode'=>[
                 'name'=>'code',
                 'value'=>200,
@@ -113,9 +113,6 @@ class Config
                 'name'=>'code',
                 'value'=>100,
             ],
-            /**
-             * 错误返回格式
-             */
             'successReturnJsonMsg'=>[
                 'name'=>'msg',
                 'value'=>'success',
@@ -124,56 +121,22 @@ class Config
                 'name'=>'msg',
                 'value'=>'error',
             ],
-            /**
-             * 返回的数据总体
-             */
             'returnJsonData'=>'data',
-            /**
-             * 返回的数据数量
-             */
             'returnJsonCount'=>'count',
-            /**
-             * 没有权限
-             */
             'jurisdictionCode'=>40003,
-            /**
-             * 没有登录
-             */
             'notLoggedCode'=>10001,
         ],
-        /**
-         * 路由配置
-         */
-        'route' => [
-            /**
-             * 路由类型
-             * note 注解
-             */
-            'type' =>'note',
-            /**
-             * 默认 \ 路由的路径-》已经存在的注解地址
-             */
-            'index'=>'/demo/index.html',
 
-            /**
-             * 控制器return默认数据类型
-             * json
-             * html
-             */
+        'route' => [
+            'type' =>'note',
+            'index'=>'/demo/index.html',
             'return' => 'json',
-            /**
-             * 自定义路由后缀在前后端完全分离时有用：nginx 配置中固定的后缀转发到后端
-             */
             'postfix'       => [
                 '.json',
                 '.jsp',
                 '.data'
             ],
-            /**
-             * returnSubjoin 自定义路由 数据格式
-             */
             'returnSubjoin'=>[
-
             ],
         ],
 

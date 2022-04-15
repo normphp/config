@@ -8,7 +8,12 @@
 
 namespace normphp\config;
 
-
+/**
+ * 每个Exception
+ * 第一个是开发时增加提示的，code是生产时主要使用的
+ * 当然开发时出现错误  会同时 返回 masg   code  code对应的ErrorOrLogConfig配置信息
+ * 生产时出现错误时 masg不会输出  只输出codeCipher（随机生成的） 和 code对应的ErrorOrLogConfig配置错误提示信息（如果没有配置就使用默认错误提示）
+ */
 class ErrorOrLogConfig
 {
 
@@ -20,10 +25,6 @@ class ErrorOrLogConfig
      * 没有登录状态码
      */
     const NOT_LOGGOD_IN_CODE = 10001;
-    /**
-     * 登录
-     */
-
     /**
      * 友善提示
      */
@@ -38,12 +39,15 @@ class ErrorOrLogConfig
         7=>'活动火爆，请稍后再试！',
         8=>'异常操作，请稍后再试！',
     ];
+
+    /**
+     * CODE_DISTRICT
+     */
     const CODE_DISTRICT = [
 
     ];
     /**
      * 系统框架10000-49999
-     *
      * 友善提示【错误代码】
      */
     const SYSTEM_CODE =[
@@ -86,13 +90,5 @@ class ErrorOrLogConfig
         ]
     ];
 
-    /**
-     * 每个Exception
-     * 第一个是开发时增加提示的，code是生产时主要使用的
-     *
-     * 当然开发时出现错误  会同时 返回 masg   code  code对应的ErrorOrLogConfig配置信息
-     *
-     * 生产时出现错误时 masg不会输出  只输出codeCipher（随机生成的） 和 code对应的ErrorOrLogConfig配置错误提示信息（如果没有配置就使用默认错误提示）
-     *
-     */
+
 }

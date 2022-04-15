@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace normphp\config;
 
 
+use Cassandra\Varint;
 use config\app\SetConfig;
 use normphp\helper\Helper;
 use normphp\staging\App;
@@ -106,15 +107,12 @@ class InitializeConfig
      * @param $data
      * @return array
      * @throws \ReflectionException
-     * @title  批量获取日志
-     *
      */
     public function get_foreach_const($data)
     {
         $Config =[];
         foreach($data as $key=>$value){
-            $reflect = new \ReflectionClass('normphp\config\\'.$value);
-            $Config = array_merge_recursive($Config, $reflect->getConstants());
+            $Config = array_merge_recursive($Config, $this->get_const('normphp\config\\'.$value));
         }
         return $Config;
     }
@@ -129,7 +127,15 @@ class InitializeConfig
     public function get_const(string $name):array
     {
         $reflect = new \ReflectionClass($name);
-        return $reflect->getConstants();
+        $data = $reflect->getConstants();
+        foreach ($data as $key=>&$value) {
+            $valueData = $value;
+            $value = [];
+            $Constant= new \ReflectionClassConstant($name,$key);
+            $value['doc'] = $Constant->getDocComment();
+            $value['value'] = $valueData;
+        }
+        return $data;
     }
 
     /**
@@ -138,7 +144,7 @@ class InitializeConfig
      * @param string $namespace
      * @param string $title
      */
-    public function get_package_config($name,$path,$namespace='',$title='包配置')
+    public function get_package_config($name, $path, $namespace='', $title='包配置')
     {
         $date = date('Y-m-d H:i:s');
         $time = time();
@@ -153,7 +159,7 @@ class InitializeConfig
     /**
      * 获取模块配置模板
      */
-    public function get_package_config_str($name,$namespace,$title,$date,$time,$appid='')
+    public function get_package_config_str($name, $namespace, $title, $date, $time, $appid='')
     {
         $this->app->Helper()->getFilePathData($this->app->DOCUMENT_ROOT.'vendor',$pathData,'ConfigTpl.php','namespaceConfigTplPath.json');
         # 准备头信息
@@ -164,7 +170,7 @@ class InitializeConfig
                 $useNamespace = '';
                 $this->app->Helper()->getUseNamespace($this->app->DOCUMENT_ROOT,$value['path'],$useNamespace);
                 $packageInfo = json_decode($value['packageInfo'],true);
-                if (!empty($value['packageInfo']) && $packageInfo===null){
+                if (!empty($value['packageInfo']) && $packageInfo===null) {
                     throw new \Exception(' error packageInfo '.$value['path'].'->/namespaceConfigTplPath.json');
                 }
                 $constData = $this->get_const($useNamespace);
@@ -173,8 +179,7 @@ class InitializeConfig
                     # 处理信息
                     $constArray = [];
                     $contesExplain = [];
-                    foreach ($constData as $cKey=>$value)
-                    {
+                    foreach ($constData as $cKey=>$value) {
                         # 拼接处理 key
                         $constKey = $packageInfo['prefix'].'_'.$cKey;
                         $constArray[$constKey] = $value;
@@ -201,7 +206,7 @@ class InitializeConfig
      * @param $str
      * @param $data
      */
-    public function setConstNotes(&$str,$data)
+    public function setConstNotes(&$str, $data)
     {
         $nbsp = '    ';
         $str .= PHP_EOL.PHP_EOL;
@@ -226,7 +231,7 @@ class InitializeConfig
      */
     public function set_config(string $name,array $data, string $path, string $namespace = '', string $title='基础配置',string $date='',int $time=0,string $appid='')
     {
-        $str = $this->setConfigString($name,$data,$namespace,$title,$date,$time,$appid);
+        $str = $this->setConfigString($name, $data, $namespace, $title, $date, $time, $appid);
         //写入文件
         Helper::file()->createDir($path);
         file_put_contents($path.$name.'.php',$str);
@@ -282,7 +287,7 @@ class InitializeConfig
      * @param $name
      * @param $namespace
      */
-    public function set_ClassHead(&$str,$name,$namespace,$title,$date,$time,$appid)
+    public function set_ClassHead(&$str, $name, $namespace, $title, $date, $time, $appid)
     {
         if ($date == ''){$date = date('Y-m-d H:i:s');}
         if ($time == ''){$time = time();}
@@ -309,7 +314,7 @@ class InitializeConfig
      * @param $name
      * @param $namespace
      */
-    public function set_ArrayHead(&$str,$name,$namespace,$title,$date,$time,$appid)
+    public function set_ArrayHead(&$str, $name, $namespace, $title, $date, $time, $appid)
     {
         if ($date == ''){$date = date('Y-m-d H:i:s');}
         if ($time == ''){$time = time();}
@@ -329,14 +334,18 @@ class InitializeConfig
      * @param $data
      * @param $str
      */
-    public function set_constContent($data,&$str,$contesExplain=[])
+    public function set_constContent($data, &$str, $contesExplain=[])
     {
-        foreach($data as $key=>$vla){
+        foreach($data as $key=>$value){
             if (isset($contesExplain[$key]) && !empty($contesExplain[$key])){
                 $str .= '    /**'.PHP_EOL;
                 $str .= '    * '.$contesExplain[$key].PHP_EOL;
                 $str .= '    **/'.PHP_EOL;
             }
+            if (isset($value['doc']) && $value['doc']!==false) {
+                $str.= '     '.$value['doc'].PHP_EOL;
+            }
+            $vla = $value['value']??$value;
             if(is_array($vla)){
                 $str .= '    const '.$key.' = '.static::arrayToString($vla,1).';'.PHP_EOL.PHP_EOL;
             }else if(is_bool($vla)){
