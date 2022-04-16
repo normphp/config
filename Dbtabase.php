@@ -100,14 +100,18 @@ class Dbtabase
         'cachePeriod'     =>30,
         'cliSqlLog' =>false,//在cli模式下是否记录sql日志
         'safety'=>[
-            // 删除过滤
-            'del'=>[
-                ['/[Dd][Rr][Oo][Pp][\s]+[Dd][Aa][Tt][Aa][Bb][Aa][Ss][Ee][\s]+/s','非法操作DROP DATABASE'],//过滤删除数据库sql
-                ['/[Dd][Rr][Oo][Pp][\s]+[Tt][Aa][Bb][Ll][Ee][\s]+/s','非法操作DROP TABLE'],//过滤删除表sql
-            ]
+
         ]
     ];
-
+    /**
+     * 数据库删除过滤，参数
+     */
+    const DBTABASE_SAFETY = [
+        'del'=>[
+            ['/[Dd][Rr][Oo][Pp][\s]+[Dd][Aa][Tt][Aa][Bb][Aa][Ss][Ee][\s]+/s','非法操作DROP DATABASE'],//过滤删除数据库sql
+            ['/[Dd][Rr][Oo][Pp][\s]+[Tt][Aa][Bb][Ll][Ee][\s]+/s','非法操作DROP TABLE'],//过滤删除表sql
+        ]
+    ];
 
 
     /**
