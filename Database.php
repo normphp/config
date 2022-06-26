@@ -10,15 +10,16 @@
 namespace normphp\config;
 
 
-class Dbtabase
+class Database
 {
 
     /**
      * 数据库配置
+     *       * database
+     * DATABASE
      * prefix   数据库表前缀
-     * uuid_identifier 本服务的uuid标识（分布式时可保证不同服务之间的空间唯一）
      */
-    const DBTABASE = [
+    const DATABASE = [
         // 数据库类型
         'type'        => 'mysql',
         //数据库版本
@@ -35,9 +36,18 @@ class Dbtabase
         'hostport'    => '3306',
         // 数据库表前缀
         'prefix'      => 'test_',
-         // 本服务的uuid标识（分布式时可保证不同服务之间的空间唯一）
-        'uuid_identifier'=>'test-1',
     ];
+
+    /**
+     * 本服务的uuid标识（分布式时可保证不同服务之间的空间唯一）
+     */
+    const IDENTIFIER = 'test-1';
+
+    /**
+     * 多数据库配置
+     */
+    const DATABASE_LIST = [];
+
 
     /**
      * 常规数据库配置   配置模板
@@ -49,7 +59,7 @@ class Dbtabase
      * STRICT_ALL_TABLES
      * 如果插入执行失败会保存错误发生之前插入的行，忽略剩下的行，并报错。
      */
-    const DBTABASE_TEMPLATE = [
+    const DATABASE_TEMPLATE = [
         // 数据库类型
         'type'        => 'mysql',
         //数据库版本
@@ -123,7 +133,7 @@ class Dbtabase
      *      PDO::FETCH_OBJ：返回一个属性名对应结果集列名的匿名对象
      * \PDO::ATTR_PERSISTENT 是否保持长连接   是
      */
-    const DBTABASE_PARAMS = [
+    const DATABASE_PARAMS = [
         \PDO::ATTR_PERSISTENT => false,
         \PDO::ATTR_EMULATE_PREPARES =>false,
         \PDO::ATTR_TIMEOUT => 3,

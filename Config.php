@@ -40,7 +40,6 @@ class Config
      *  cache    缓存
      *      driveType 缓存类型（驱动drive）redis file
      *      targetDir 缓存路径（file类型下） DIRECTORY_SEPARATOR 目录分割符
-     *      CacheTypeDir 缓存类型目录
      * init 初始化
      *      json_encode json_encode 参数
      *      header  默认自定义响应
@@ -77,10 +76,21 @@ class Config
      * returnSubjoin 自定义路由 数据格式
      */
     CONST UNIVERSAL =[
+        'route' => [
+            'type' =>'note',
+            'index'=>'/demo/index.html',
+            'return' => 'json',
+            'postfix'       => [
+                '.json',
+                '.jsp',
+                '.data'
+            ],
+            'returnSubjoin'=>[
+            ],
+        ],
         'cache' => [
             'driveType'=>'file',
             'targetDir' => '..'.DIRECTORY_SEPARATOR.'runtime'.DIRECTORY_SEPARATOR,
-            'CacheTypeDir'=>'',
         ],
         'init' =>[
             'json_encode'=>JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES,
@@ -126,20 +136,6 @@ class Config
             'jurisdictionCode'=>40003,
             'notLoggedCode'=>10001,
         ],
-
-        'route' => [
-            'type' =>'note',
-            'index'=>'/demo/index.html',
-            'return' => 'json',
-            'postfix'       => [
-                '.json',
-                '.jsp',
-                '.data'
-            ],
-            'returnSubjoin'=>[
-            ],
-        ],
-
     ];
     /**
      * 微服务核心配置

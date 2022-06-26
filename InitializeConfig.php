@@ -30,8 +30,8 @@ class InitializeConfig
     /**
      * 数据库配置名称
      */
-    const Dbtabase = [
-        'Dbtabase',
+    const Database = [
+        'Database',
     ];
     /**
      * 错误与日志配置
@@ -86,9 +86,9 @@ class InitializeConfig
      * @return mixed
      * @throws \ReflectionException
      */
-    public function get_dbtabase_const()
+    public function get_database_const()
     {
-        return $this->get_foreach_const(self::Dbtabase);
+        return $this->get_foreach_const(self::Database);
     }
 
     /**
